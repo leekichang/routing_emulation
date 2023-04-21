@@ -1,4 +1,5 @@
 #client.py
+import config as cfg
 import time
 from socket import *
 import pickle
@@ -8,7 +9,7 @@ import argparse
 def parse_args():
     parser = argparse.ArgumentParser(description='Socket Programming')
     parser.add_argument('--ip', default='127.0.0.1', type=str)
-    parser.add_argument('--p', default=9784, type=int)
+    parser.add_argument('--p', default=cfg.R_PORT, type=int)
     args = parser.parse_args()
     return args
 
@@ -22,16 +23,16 @@ class Client:
     def send(self):
         data = int(input('>>>'))
         self.socket.sendall(pickle.dumps(data))
-        print('전송완료')
+        print('SENT!')
         if data == 0:
-            print("연결 종료")
+            print("DISCONNECTED!")
             self.connected = False
             self.socket.close()
 
     def recv(self):
-        data_total_len     = int(self.socket.recv(1024))
-        left_recv_len      = data_total_len
-        buffer_size        = data_total_len
+        data_total_len = int(self.socket.recv(1024))
+        left_recv_len  = data_total_len
+        buffer_size    = data_total_len
         time.sleep(1)
 
         recv_data = []
@@ -43,8 +44,11 @@ class Client:
                 break
         if not left_recv_len == 0:
             print("Packet Loss!")
+            return -1
         else:
-            print(f'받은 데이터:{pickle.loads(b"".join(recv_data))}\n\n{data_total_len}')
+            recv_data = pickle.loads(b"".join(recv_data))
+            print(f'받은 데이터:{recv_data}\n\n{data_total_len}')
+            return recv_data
     
     def run(self):
         while True:

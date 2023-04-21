@@ -43,15 +43,15 @@ class Server:
             recv_data.append(chunk)
             if len(chunk) < 4096:
                 break
-        data = pickle.loads(b''.join(recv_data))
-        if data == 0:
+        self.request = pickle.loads(b''.join(recv_data))
+        if self.request == 0:
             self.client_socket.close()
             self.connected = False
             print("DISCONNECTED")
             self.connect()
+            return
         
-        print(f"RECEIVCED DATA: {data}")
-        self.request = data
+        print(f"RECEIVCED DATA: {self.request}")
         
     def connect(self):
         print("WAITING FOR NEW CONNECTION")
