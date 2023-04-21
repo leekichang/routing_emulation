@@ -8,8 +8,6 @@ from socket import *
 from server import *
 from client import *
 
-#TODO: Toy Example to Offloading Scenario
-
 ATTACK_TYPES = {"f1":'Normal', "f2":'Reconstruction Attack', "f3":'Adversarial Attack'}
 class Receiver(Server):
     def __init__(self, SERVER_ADDRESS):
