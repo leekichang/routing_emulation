@@ -7,6 +7,10 @@ from socket import *
 from server import *
 from client import *
 
+#TODO: Implement Forwarding
+#TODO: Implement Threading Based Attack Simulation
+#TODO: Toy Example to Offloading Scenario
+
 class Receiver(Server):
     def __init__(self, SERVER_ADDRESS):
         super().__init__(SERVER_ADDRESS)
