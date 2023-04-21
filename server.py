@@ -28,7 +28,6 @@ class Server:
             data = np.random.rand(self.request)
             data_byte = pickle.dumps(data)
             self.client_socket.sendall(str(len(data_byte)).encode())
-            time.sleep(1)
 
             self.client_socket.sendall(data_byte)
             print(f"DATA SENT")

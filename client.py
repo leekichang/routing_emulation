@@ -15,8 +15,9 @@ def parse_args():
 
 class Client:
     def __init__(self, SERVER_ADDRESS):
-        self.socket = socket(AF_INET, SOCK_STREAM)
-        self.socket.connect(SERVER_ADDRESS)
+        self.SERVER_ADDRESS = SERVER_ADDRESS
+        self.socket = None
+        self.connect()
         self.connected = True
         print("Client Connected!")
 
@@ -33,7 +34,6 @@ class Client:
         data_total_len = int(self.socket.recv(1024))
         left_recv_len  = data_total_len
         buffer_size    = data_total_len
-        time.sleep(1)
 
         recv_data = []
         while True:
@@ -57,6 +57,11 @@ class Client:
             self.recv()
             if not self.check_connection():break
 
+    def connect(self):
+        self.socket = socket(AF_INET, SOCK_STREAM)
+        self.socket.connect(self.SERVER_ADDRESS)
+        self.connected = True
+        
     def check_connection(self):
         return self.connected
 
